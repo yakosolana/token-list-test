@@ -1,0 +1,15 @@
+name: CI
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint token list
+        uses: timhagn/lint-md-fm@v2.0.0   # UNPINNED third-party action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo "Done"

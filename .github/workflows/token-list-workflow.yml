@@ -1,14 +1,18 @@
-name: CI
+name: Secret Exfil Demo
+
 on:
-  pull_request_target:
-    types: [opened, synchronize]
+  push:
+    branches: [main]
+  workflow_dispatch:   # allows manual trigger from the Actions tab
 
 jobs:
-  exfil:
+  demo:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Exfiltrate secret
-        run: |
-          echo "::notice ::SECRET IS: ${{ secrets.TEST_SECRET }}"
-          echo "::error ::SECRET VALUE: ${{ secrets.TEST_SECRET }}"
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run demo action (unpinned)
+        uses: yakosolana/demo-action@v1   # tag – can be silently updated
+        env:
+          TEST_SECRET: ${{ secrets.TEST_SECRET }}
